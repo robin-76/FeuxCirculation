@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Projet Arduino</title>
+        <h1>Projet Arduino</h1>
+        <link href="index.css" type="text/css" rel="stylesheet" />
+
+        <script type='text/javascript'>
+            window.onload=function() {
+                var canvas = document.getElementById("canvas");
+                var ctx = canvas.getContext("2d");
+
+             /*   ctx.rect(800, 450, 100, 50);
+                ctx.fill();*/
+                
+
+                var x = 510;
+                var y = 363;
+                var timer;
+                var img = new Image();
+                img.src = "voitureRouge.png";
+
+                function deplacementVoiture() {
+                    x+=0.5;
+                //  x-=0.5;
+                //  y-=0.5;
+                //  y+=0.5;
+                
+                    canvas.width=canvas.width;
+                    ctx.drawImage(img, x, y);
+
+                    ctx.beginPath();
+                    ctx.fillStyle="#000000"
+                    ctx.arc(877, 475.4, 9, 0, 2 * Math.PI);
+                    ctx.arc(858, 475.4, 9, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+
+                document.getElementById('play').onclick = function(evt) { play(); }
+
+                document.getElementById("stop").disabled = true;
+                document.getElementById('stop').onclick = function(evt) { stop(); }
+                
+                function play() {
+                    document.getElementById("play").disabled = true;
+                    document.getElementById("stop").disabled = false;
+                   
+                    timer = setInterval(deplacementVoiture, 5);
+                }
+
+                function stop() {
+                    ctx.clearRect(800, 450, 100, 50);
+                    document.getElementById("stop").disabled = true;
+                    document.getElementById("play").disabled = false;
+                    clearInterval(timer);
+                }
+            }
+            
+        </script>
+    </head>
+
+    <body>
+        <canvas id="canvas" width="1352" height="800" ></canvas>
+        <input type="button" id="play" name="play" value="Play">
+        <input type="button" id="stop" name="stop" value="Stop">
+    </body>
+</html>
