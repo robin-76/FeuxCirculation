@@ -11,49 +11,144 @@
                 var canvas = document.getElementById("canvas");
                 var ctx = canvas.getContext("2d");
 
-             /*   ctx.rect(800, 450, 100, 50);
-                ctx.fill();*/
-                
+            /*    // Afficher x et y avec la souris
+                canvas.addEventListener("mousemove", function(e) { 
+                var cRect = canvas.getBoundingClientRect();        
+                var canvasX = Math.round(e.clientX - cRect.left);  
+                var canvasY = Math.round(e.clientY - cRect.top);   
+                ctx.clearRect(0, 0, canvas.width, canvas.height);  
+                ctx.fillText("X: "+canvasX+", Y: "+canvasY, 10, 20);
+                });
 
-                var x = 510;
-                var y = 363;
-                var timer;
+                ctx.rect(155, 262, 100, 50);
+                ctx.fill();*/
+
+                // Feux éteints à l'état initial
+                ctx.beginPath();
+                ctx.fillStyle="#000000"
+                ctx.arc(839, 475.4, 9, 0, 2 * Math.PI);
+                ctx.arc(858, 475.4, 9, 0, 2 * Math.PI);
+                ctx.arc(877, 475.4, 9, 0, 2 * Math.PI);
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.fillStyle="#000000"
+                ctx.arc(1047, 287.5, 9, 0, 2 * Math.PI);
+                ctx.arc(1066, 287.5, 9, 0, 2 * Math.PI);
+                ctx.arc(1086, 287.5, 9, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                var x = 518, y = 363; // position initiale voiture
+                var timer, timeoutID;
+                var orangeFini = false;
+                var bVert = false, bRouge = false;
                 var img = new Image();
                 img.src = "voitureRouge.png";
 
-                function deplacementVoiture() {
-                    x+=0.5;
-                //  x-=0.5;
-                //  y-=0.5;
-                //  y+=0.5;
-                
-                    canvas.width=canvas.width;
-                    ctx.drawImage(img, x, y);
+                function vert() {
+                    orangeFini = true;
+
+                    ctx.clearRect(800, 450, 100, 50);
+                    ctx.clearRect(1025, 262, 100, 50);
 
                     ctx.beginPath();
                     ctx.fillStyle="#000000"
-                    ctx.arc(877, 475.4, 9, 0, 2 * Math.PI);
                     ctx.arc(858, 475.4, 9, 0, 2 * Math.PI);
+                    ctx.arc(877, 475.4, 9, 0, 2 * Math.PI);
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.fillStyle="#000000"
+                    ctx.arc(1047, 287.5, 9, 0, 2 * Math.PI);
+                    ctx.arc(1066, 287.5, 9, 0, 2 * Math.PI);
                     ctx.fill();
                 }
 
-                document.getElementById('play').onclick = function(evt) { play(); }
+                function orange() {
+                    ctx.beginPath();
+                    ctx.fillStyle="#000000"
+                    ctx.arc(839, 475.4, 9, 0, 2 * Math.PI);
+                    ctx.arc(877, 475.4, 9, 0, 2 * Math.PI);
+                    ctx.fill();
 
-                document.getElementById("stop").disabled = true;
-                document.getElementById('stop').onclick = function(evt) { stop(); }
+                    ctx.beginPath();
+                    ctx.fillStyle="#000000"
+                    ctx.arc(1047, 287.5, 9, 0, 2 * Math.PI);
+                    ctx.arc(1086, 287.5, 9, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+
+                function rouge() {
+                    orangeFini = true;
+                    clearInterval(timer);
+
+                    ctx.clearRect(800, 450, 100, 50);
+                    ctx.clearRect(1025, 262, 100, 50);
+
+                    ctx.beginPath();
+                    ctx.fillStyle="#000000"
+                    ctx.arc(839, 475.4, 9, 0, 2 * Math.PI);
+                    ctx.arc(858, 475.4, 9, 0, 2 * Math.PI);
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.fillStyle="#000000"
+                    ctx.arc(1066, 287.5, 9, 0, 2 * Math.PI);
+                    ctx.arc(1086, 287.5, 9, 0, 2 * Math.PI);
+                    ctx.fill();
+                }
+
+                function deplacementVoiture() {
+                    canvas.width=canvas.width;
+                    ctx.drawImage(img, x, y);
+
+                    if(bVert) {
+                        if(!orangeFini) {
+                        orange();
+                        timeoutID = setTimeout(vert, 600);
+                        }
+                        else {
+                            vert();
+                            x += 0.5; // Avancement de la voiture
+                        }
+                    }
+                    
+                    if(bRouge) {
+                        if(!orangeFini) {
+                        orange();
+                        x += 0.5; // Avancement de la voiture
+                        timeoutID = setTimeout(rouge, 600);
+                        }
+                        else rouge();
+                    }
+                    
+                }
+
+                document.getElementById('feuVert').onclick = function(evt) { feuVert(); }
                 
-                function play() {
-                    document.getElementById("play").disabled = true;
-                    document.getElementById("stop").disabled = false;
+                document.getElementById("feuRouge").disabled = true;
+                document.getElementById('feuRouge').onclick = function(evt) { feuRouge(); }
+                
+                function feuVert() {
+                    orangeFini = false;
+                    bVert = true;
+                    bRouge = false;
+                  //  clearTimeout(timeoutID); ne fonctionne pas
+
+                    document.getElementById("feuVert").disabled = true;
+                    document.getElementById("feuRouge").disabled = false;
                    
                     timer = setInterval(deplacementVoiture, 5);
                 }
+                
+                function feuRouge() {
+                    orangeFini = false;
+                    bRouge = true;
+                    bVert = false;
+                  //  clearTimeout(timeoutID); ne fontionne pas
 
-                function stop() {
-                    ctx.clearRect(800, 450, 100, 50);
-                    document.getElementById("stop").disabled = true;
-                    document.getElementById("play").disabled = false;
-                    clearInterval(timer);
+                    document.getElementById("feuRouge").disabled = true;
+                    document.getElementById("feuVert").disabled = false;
                 }
             }
             
@@ -62,7 +157,7 @@
 
     <body>
         <canvas id="canvas" width="1352" height="800" ></canvas>
-        <input type="button" id="play" name="play" value="Play">
-        <input type="button" id="stop" name="stop" value="Stop">
+        <input type="button" id="feuVert" name="feuVert" value="Feu vert">
+        <input type="button" id="feuRouge" name="feuRouge" value="Feu rouge">
     </body>
 </html>
