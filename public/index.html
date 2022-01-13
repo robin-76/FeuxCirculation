@@ -38,12 +38,22 @@
                 ctx.arc(1086, 287.5, 9, 0, 2 * Math.PI);
                 ctx.fill();
                 
-                var x = 518, y = 363; // position initiale voiture
-                var timer, timeoutID;
+                var timer = setInterval(deplacementVoiture, 5);
+                var timeoutID;
                 var orangeFini = false;
                 var bVert = false, bRouge = false;
+                var voiture1stop = true;
+                var voiture2stop = true;
+                var oldX = 0;
+                var oldX2 = 0;
+
+                var x = 518, y = 363; // position initiale voiture
                 var img = new Image();
                 img.src = "voitureRouge.png";
+
+                var x2 = 618, y2 = 363; // position initiale voiture
+                var img2 = new Image();
+                img2.src = "voitureRouge.png";
 
                 function vert() {
                     orangeFini = true;
@@ -80,7 +90,6 @@
 
                 function rouge() {
                     orangeFini = true;
-                    clearInterval(timer);
 
                     ctx.clearRect(800, 450, 100, 50);
                     ctx.clearRect(1025, 262, 100, 50);
@@ -101,27 +110,46 @@
                 function deplacementVoiture() {
                     canvas.width=canvas.width;
                     ctx.drawImage(img, x, y);
+                    ctx.drawImage(img, x2, y2);
 
+                    if(oldX == x )
+                        voiture1stop = true;
+                    else
+                        voiture1stop = false;    
+
+                    if(x2 == oldX2)
+                        voiture2stop = true;
+                    else
+                        voiture2stop = false;    
+
+                    if(x2-x < 100)
+                        voiture1stop = true;
+
+                    oldX = x;
+                    oldX2 = x2;
+                        
                     if(bVert) {
                         if(!orangeFini) {
+                            if(!voiture2stop) x2 += 0.5;
                         orange();
                         timeoutID = setTimeout(vert, 600);
                         }
                         else {
                             vert();
                             x += 0.5; // Avancement de la voiture
+                            x2 += 0.5;
                         }
                     }
                     
-                    if(bRouge) {
+                    if(bRouge) { 
+                        if(x!=800 && !voiture1stop) x += 0.5; // Avancement de la voiture
+                        if(x2!=800 && !voiture2stop)  x2 += 0.5;
                         if(!orangeFini) {
                         orange();
-                        x += 0.5; // Avancement de la voiture
                         timeoutID = setTimeout(rouge, 600);
                         }
                         else rouge();
                     }
-                    
                 }
 
                 document.getElementById('feuVert').onclick = function(evt) { feuVert(); }
@@ -134,11 +162,13 @@
                     bVert = true;
                     bRouge = false;
                   //  clearTimeout(timeoutID); ne fonctionne pas
+                  voiture1stop = false;
+                  voiture2stop = false;
 
                     document.getElementById("feuVert").disabled = true;
                     document.getElementById("feuRouge").disabled = false;
                    
-                    timer = setInterval(deplacementVoiture, 5);
+                    
                 }
                 
                 function feuRouge() {
