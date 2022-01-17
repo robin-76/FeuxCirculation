@@ -14,8 +14,8 @@
                 var nbVoitures = 6;
                 var interval;
                 var orangeFiniHorizontal = false, orangeFiniVertical = false;
-                var bVertHorizontal = false, bRougeHorizontal = false;
-                var bVertVertical = false, bRougeVertical = false;
+                var bVertHorizontal = true, bRougeHorizontal = false;
+                var bVertVertical = false, bRougeVertical = true;
                 var distanceArret = 120, distanceMin = 125, distanceMax = 500;
                 var vitesseMin = 0.2, vitesseMax = 1.5;
 
@@ -64,8 +64,7 @@
                     tabImgHaut[i].src = "img/hautVoiture" + Math.floor((Math.random() * nbVoitures)) + ".png";
                 }
 
-                feuxEteintsHorizontal();
-                feuxEteintsVertical();
+                interval = setInterval(deplacementVoitures, 6);
 
                 function deplacementVoitures() {
                     canvas.width=canvas.width;       
@@ -143,9 +142,6 @@
                             rougeHorizontal();
                     }
 
-                    else
-                        feuxEteintsHorizontal();
-
                     if(bVertVertical) {
                         vertVertical();
                         tabYBas[0] -= Math.random() * (vitesseMax - vitesseMin) + vitesseMin;
@@ -187,9 +183,6 @@
                             rougeVertical();
                     }
 
-                    else
-                        feuxEteintsVertical();
-
                     // On recommence lorsque la dernière voiture a finit
                     if(parseInt(tabXGauche[nbVoitures-1])>800) {
                         var g = -134;
@@ -230,38 +223,6 @@
                             tabImgHaut[i].src = "img/hautVoiture" + Math.floor((Math.random() * nbVoitures)) + ".png";
                         }
                     }
-                }
-
-                function feuxEteintsHorizontal() {
-                    ctx.beginPath();
-                    ctx.fillStyle="#000000"
-                    ctx.arc(286, 495.2, 9, 0, 2 * Math.PI);
-                    ctx.arc(305.5, 495.2, 9, 0, 2 * Math.PI);
-                    ctx.arc(324.5, 495.2, 9, 0, 2 * Math.PI);
-                    ctx.fill();
-
-                    ctx.beginPath();
-                    ctx.fillStyle="#000000"
-                    ctx.arc(495, 307.3, 9, 0, 2 * Math.PI);
-                    ctx.arc(514, 307.3, 9, 0, 2 * Math.PI);
-                    ctx.arc(533, 307.3, 9, 0, 2 * Math.PI);
-                    ctx.fill();
-                }
-
-                function feuxEteintsVertical() {
-                    ctx.beginPath();
-                    ctx.fillStyle="#000000"
-                    ctx.arc(505.3, 484, 9, 0, 2 * Math.PI);
-                    ctx.arc(505.3, 504, 9, 0, 2 * Math.PI);
-                    ctx.arc(505.3, 524, 9, 0, 2 * Math.PI);
-                    ctx.fill();
-
-                    ctx.beginPath();
-                    ctx.fillStyle="#000000"
-                    ctx.arc(314, 279, 9, 0, 2 * Math.PI);
-                    ctx.arc(314, 299, 9, 0, 2 * Math.PI);
-                    ctx.arc(314, 319, 9, 0, 2 * Math.PI);
-                    ctx.fill();
                 }
 
                 function vertHorizontal() {
@@ -352,57 +313,37 @@
                     ctx.fill();
                 }
                 
-                function boutonVertHorizontal() {
+                function boutonAlterner() {
                     clearInterval(interval);
                     interval = setInterval(deplacementVoitures, 6);
-                    orangeFiniHorizontal = false;
-                    bVertHorizontal = true;
-                    bRougeHorizontal = false;
 
-                    document.getElementById("boutonVertHorizontal").disabled = true;
-                    document.getElementById("boutonRougeHorizontal").disabled = false;
-                }
-                
-                function boutonRougeHorizontal() {
-                    orangeFiniHorizontal = false;
-                    bRougeHorizontal = true;
-                    bVertHorizontal = false;
+                    if(bVertHorizontal) {
+                        orangeFiniHorizontal = false;
+                        bVertHorizontal = false;
+                        bRougeHorizontal = true;
+                        setTimeout(function(){
+                            bRougeVertical = false;
+                            bVertVertical = true;
+                        }, 2000); 
+                    }
 
-                    document.getElementById("boutonRougeHorizontal").disabled = true;
+                    else if(bRougeHorizontal) {
+                        orangeFiniVertical = false;
+                        bRougeVertical = true;
+                        bVertVertical = false;
+                        setTimeout(function(){
+                            bRougeHorizontal = false;
+                            bVertHorizontal = true;
+                        }, 2000);
+                    }
+
+                    document.getElementById("boutonAlterner").disabled = true;
+
                     setTimeout(function(){
-                        document.getElementById("boutonVertHorizontal").disabled = false;
-                    }, 600);    
+                        document.getElementById("boutonAlterner").disabled = false;
+                    }, 2000);
                 }
-
-                function boutonVertVertical() {
-                    clearInterval(interval);
-                    interval = setInterval(deplacementVoitures, 6);
-                    orangeFiniVertical = false;
-                    bVertVertical = true;
-                    bRougeVertical = false;
-
-                    document.getElementById("boutonVertVertical").disabled = true;
-                    document.getElementById("boutonRougeVertical").disabled = false;
-                }
-                
-                function boutonRougeVertical() {
-                    orangeFiniVertical = false;
-                    bRougeVertical = true;
-                    bVertVertical = false;
-
-                    document.getElementById("boutonRougeVertical").disabled = true;
-                    setTimeout(function(){
-                        document.getElementById("boutonVertVertical").disabled = false;
-                    }, 600);    
-                }
-
-                document.getElementById('boutonVertHorizontal').onclick = function(evt) { boutonVertHorizontal(); }
-                document.getElementById("boutonRougeHorizontal").disabled = true;
-                document.getElementById('boutonRougeHorizontal').onclick = function(evt) { boutonRougeHorizontal(); }
-
-                document.getElementById('boutonVertVertical').onclick = function(evt) { boutonVertVertical(); }
-                document.getElementById("boutonRougeVertical").disabled = true;
-                document.getElementById('boutonRougeVertical').onclick = function(evt) { boutonRougeVertical(); }
+                document.getElementById('boutonAlterner').onclick = function(evt) { boutonAlterner(); }
             }
             
         </script>
@@ -410,19 +351,6 @@
 
     <body>
         <canvas id="canvas" width="800" height="800"></canvas>
-        <div class='boutonsGauche'>
-            <div class='title'>Route horizontale</div>
-            <div class='listOfButtons'>
-                <button class="boutonRouge" id="boutonRougeHorizontal" type="button">Rouge</button>
-                <button class="boutonVert" id="boutonVertHorizontal" type="button">Vert</button>
-            </div>
-          </div>
-        <div class='boutonsDroite'>
-            <div class='title'>Route verticale</div>
-            <div class='listOfButtons'>
-                <button class="boutonRouge" id="boutonRougeVertical" type="button">Rouge</button>
-                <button class="boutonVert" id="boutonVertVertical" type="button">Vert</button>
-            </div>
-          </div>  
+        <button class="bouton" id="boutonAlterner" type="button">Alterner</button>
     </body>
 </html>

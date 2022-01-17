@@ -16,10 +16,12 @@ canvas {
     display: block;
 }
 
-.boutonVert {
+.bouton {
+    position: absolute;
+    left: 61%;
+    bottom: 18%;
     margin: 10px;
     height: 40px;
-    width: 85px;
     border: 0;
     line-height: 2.5;
     padding: 0 20px;
@@ -27,42 +29,7 @@ canvas {
     text-align: center;
     color: #fff;
     text-shadow: 1px 1px 1px #000;
-    border-radius: 20px;
-    background-color: rgb(56, 177, 0, 1);
-    background-image: linear-gradient(to top left,
-                                      rgba(0, 0, 0, .2),
-                                      rgba(0, 0, 0, .2) 30%,
-                                      rgba(0, 0, 0, 0));
-    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),
-                inset -2px -2px 3px rgba(0, 0, 0, .6);
-}
-
-.boutonVert:hover {
-    background-color: rgb(65, 206, 0, 1);
-}
-
-.boutonVert:active {
-    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
-                inset 2px 2px 3px rgba(0, 0, 0, .6);
-}
-
-.boutonVert:disabled{
-    background-color: #cccccc;
-    color: #666666;
-}
-
-.boutonRouge {
-    margin: 10px;
-    height: 40px;
-    width: 85px;
-    border: 0;
-    line-height: 2.5;
-    padding: 0 20px;
-    font-size: 1rem;
-    text-align: center;
-    color: #fff;
-    text-shadow: 1px 1px 1px #000;
-    border-radius: 20px;
+    border-radius: 15px;
     background-color: rgba(220, 0, 0, 1);
     background-image: linear-gradient(to top left,
                                       rgba(0, 0, 0, .2),
@@ -72,50 +39,16 @@ canvas {
                 inset -2px -2px 3px rgba(0, 0, 0, .6);
 }
 
-.boutonRouge:hover {
+.bouton:hover {
     background-color: rgb(255, 0, 0, 1);
 }
 
-.boutonRouge:active {
+.bouton:active {
     box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
                 inset 2px 2px 3px rgba(0, 0, 0, .6);
 }
 
-.boutonRouge:disabled{
-  background-color: #cccccc;
-  color: #666666;
-}
-
-.boutonsGauche {
-  position: absolute;
-  right: 63%;
-  bottom: 12%;
-  width: 105px;
-  border: solid;
-  display: inline-block;
-  text-align: center;
-}
-
-.boutonsDroite {
-    position: absolute;
-    left: 63%;
-    bottom: 12%;
-    width: 105px;
-    border: solid;
-    display: inline-block;
-    text-align: center;
+.bouton:disabled {
+    background-color: #cccccc;
+    color: #666666;
   }
-
-.title {
-    font-family: Arial;
-    font-size: 16px;
-    font-weight: bold;
-}
-
-.listOfButtons {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-template-columns: repeat(1, 1fr);
-  grid-template-columns: repeat(1, 1fr);
-  margin: 0 auto;
-}
