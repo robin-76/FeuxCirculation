@@ -19,12 +19,15 @@
                 var distanceArret = 120, distanceMin = 125, distanceMax = 500;
                 var vitesseMin = 0.2, vitesseMax = 1.5;
 
+                var debutHorizontal = -134, finHorizontal = 800;
+                var debutVertical = 788, finVertical = -140;
+
                 // positions initiales des voitures selon l'axe
                 var yGauche = 382, yDroite = 336;
                 var xBas = 390, xHaut = 344;
 
-                var feuGauche = 246, feuDroite = 419;
-                var feuBas = 405, feuHaut = 245;
+                var feuGauche = 246, feuDroite = 420;
+                var feuBas = 408, feuHaut = 245;
 
                 var tabVoitureStopGauche = new Array(), tabVoitureStopDroite = new Array();
                 var tabVoitureStopBas = new Array(), tabVoitureStopHaut = new Array();
@@ -38,8 +41,8 @@
                 var tabYBas = new Array(), tabYHaut = new Array();
 
                 // position des voitures
-                var g = -134, d = 800;
-                var b = 788, h = -140;
+                var g = debutHorizontal, d = finHorizontal;
+                var b = debutVertical, h = finVertical;
                 for(var i=0; i<nbVoitures; i++) {
                     tabXGauche[i] = g;
                     g = g - Math.floor(Math.random() * (distanceMax+1 - distanceMin) + distanceMin);
@@ -184,8 +187,8 @@
                     }
 
                     // On recommence lorsque la dernière voiture a finit
-                    if(parseInt(tabXGauche[nbVoitures-1])>800) {
-                        var g = -134;
+                    if(parseInt(tabXGauche[nbVoitures-1])>finHorizontal) {
+                        var g = debutHorizontal;
                         for(var i=0; i<nbVoitures; i++) {
                             tabXGauche[i] = g;
                             g = g - Math.floor(Math.random() * (distanceMax+1 - distanceMin) + distanceMin);
@@ -194,8 +197,8 @@
                         }
                     }
 
-                    if(parseInt(tabXDroite[nbVoitures-1])<-134) {
-                        var d = 800;
+                    if(parseInt(tabXDroite[nbVoitures-1])<debutHorizontal) {
+                        var d = finHorizontal;
                         for(var i=0; i<nbVoitures; i++) {
                             tabXDroite[i] = d;
                             d = d + Math.floor(Math.random() * (distanceMax+1 - distanceMin) + distanceMin);
@@ -204,8 +207,8 @@
                         }
                     }
 
-                    if(parseInt(tabYBas[nbVoitures-1])<-140) {
-                        var b = 788;
+                    if(parseInt(tabYBas[nbVoitures-1])<finVertical) {
+                        var b = debutVertical;
                         for(var i=0; i<nbVoitures; i++) {
                             tabYBas[i] = b;
                             b = b + Math.floor(Math.random() * (distanceMax+1 - distanceMin) + distanceMin);
@@ -214,8 +217,8 @@
                         }
                     }
 
-                    if(parseInt(tabYHaut[nbVoitures-1])>788) {
-                        var h = -140;
+                    if(parseInt(tabYHaut[nbVoitures-1])>debutVertical) {
+                        var h = finVertical;
                         for(var i=0; i<nbVoitures; i++) {
                             tabYHaut[i] = h;
                             h = h - Math.floor(Math.random() * (distanceMax+1 - distanceMin) + distanceMin);
