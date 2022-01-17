@@ -2,6 +2,11 @@ body {
     background-color: #F5C85D;
 }
 
+h1{
+    text-align: center;
+    font-family: Arial;
+}
+
 canvas {
     background-image: url('feux.png');
     background-repeat: no-repeat;
@@ -12,9 +17,9 @@ canvas {
 }
 
 .boutonVert {
-    position: absolute;
-    bottom: 10px;
-    right: 30%;
+    margin: 10px;
+    height: 40px;
+    width: 85px;
     border: 0;
     line-height: 2.5;
     padding: 0 20px;
@@ -41,10 +46,15 @@ canvas {
                 inset 2px 2px 3px rgba(0, 0, 0, .6);
 }
 
+.boutonVert:disabled{
+    background-color: #cccccc;
+    color: #666666;
+}
+
 .boutonRouge {
-    position: absolute;
-    bottom: 10px;
-    right: 20%;
+    margin: 10px;
+    height: 40px;
+    width: 85px;
     border: 0;
     line-height: 2.5;
     padding: 0 20px;
@@ -71,12 +81,41 @@ canvas {
                 inset 2px 2px 3px rgba(0, 0, 0, .6);
 }
 
-button:disabled,
-.boutonVert:disabled{
-    background-color: #cccccc;
-    color: #666666;
-  }
 .boutonRouge:disabled{
   background-color: #cccccc;
   color: #666666;
+}
+
+.boutonsGauche {
+  position: absolute;
+  right: 63%;
+  bottom: 12%;
+  width: 105px;
+  border: solid;
+  display: inline-block;
+  text-align: center;
+}
+
+.boutonsDroite {
+    position: absolute;
+    left: 63%;
+    bottom: 12%;
+    width: 105px;
+    border: solid;
+    display: inline-block;
+    text-align: center;
+  }
+
+.title {
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.listOfButtons {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(1, 1fr);
+  margin: 0 auto;
 }
