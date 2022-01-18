@@ -327,7 +327,7 @@
                         setTimeout(function(){
                             bRougeVertical = false;
                             bVertVertical = true;
-                        }, 2000); 
+                        }, 1000); 
                     }
 
                     else if(bRougeHorizontal) {
@@ -337,14 +337,14 @@
                         setTimeout(function(){
                             bRougeHorizontal = false;
                             bVertHorizontal = true;
-                        }, 2000);
+                        }, 1000);
                     }
 
                     document.getElementById("boutonAlterner").disabled = true;
 
                     setTimeout(function(){
                         document.getElementById("boutonAlterner").disabled = false;
-                    }, 2000);
+                    }, 1000);
                 }
                 document.getElementById('boutonAlterner').onclick = function(evt) { boutonAlterner(); }
             }
