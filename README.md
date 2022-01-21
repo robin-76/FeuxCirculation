@@ -24,3 +24,10 @@ On commence par installer les dépendances :
 Puis on lance le projet :
 
     npm start
+
+Pour un problème de permissions du Arduino : 
+
+    ls /dev/ttyACM0
+
+    sudo chmod a+rw /dev/ttyACM0
+
