@@ -10,17 +10,14 @@ h1{
 canvas {
     background-image: url('img/feux.png');
     background-repeat: no-repeat;
-    background-position: center;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 5%;
     display: block;
 }
 
 .bouton {
-    position: absolute;
-    left: 61%;
+    position: fixed;
+    left: 600px;
     bottom: 18%;
-    margin: 10px;
     height: 40px;
     border: 0;
     line-height: 2.5;
@@ -51,4 +48,9 @@ canvas {
 .bouton:disabled {
     background-color: #cccccc;
     color: #666666;
-  }
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+}

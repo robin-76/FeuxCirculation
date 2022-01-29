@@ -9,8 +9,10 @@
   "author": "Robin Guyomar & Maxence Bourgeaux",
   "license": "ISC",
   "dependencies": {
-    "canvas": "^2.8.0",
     "express": "^4.17.2",
-    "johnny-five": "^2.1.0"
+    "johnny-five": "^2.1.0",
+    "mongoose": "^6.1.8",
+    "serialport": "^9.2.8",
+    "ws": "^8.4.2"
   }
 }
