@@ -17,7 +17,13 @@ h1{
 .lineChart {
     position: absolute;
     left: 1100px;
-    bottom: 55%;
+    bottom: 50%;
+}
+
+.barChart {
+    position: absolute;
+    left: 1100px;
+    bottom: 8%;
 }
 
 .bouton {

@@ -6,6 +6,8 @@ window.addEventListener("load", function(event) {
 
     let i;
     let msg;
+    let startTime, endTime;
+    let tabTempsArretHorizontal = [], tabTempsArretVertical = [];
     let alternanceFeu = false;
     let nbFeux = 0;
     let nbVoituresHorizontales = 0;
@@ -70,6 +72,7 @@ window.addEventListener("load", function(event) {
     }
 
     interval = setInterval(deplacementVoitures, 6);
+    startTime = new Date();
     setInterval(sendWebSocket, 1000);
 
     function deplacementVoitures() {
@@ -223,6 +226,8 @@ window.addEventListener("load", function(event) {
             nbFeux: nbFeux,
             nbVoituresHorizontales: nbVoituresHorizontales,
             nbVoituresVerticales: nbVoituresVerticales,
+            tempsArretHorizontal: moyenne(tabTempsArretHorizontal),
+            tempsArretVertical: moyenne(tabTempsArretVertical)
         };
                 
         ws.send(JSON.stringify(msg));
@@ -317,8 +322,23 @@ window.addEventListener("load", function(event) {
         ctx.fill();
     }
 
+    function moyenne(tab) {
+        if(!tab.length)
+            return 0;
+        
+        let sum = 0;
+     
+        tab.forEach(item => {
+          sum += item;
+        });
+     
+        return Math.round(sum / tab.length);
+    }
+
     function boutonAlterner() {
         nbFeux++;
+
+        endTime = new Date();
 
         clearInterval(interval);
         interval = setInterval(deplacementVoitures, 6);
@@ -328,6 +348,9 @@ window.addEventListener("load", function(event) {
             bVertHorizontal = false;
             bRougeHorizontal = true;
             alternanceFeu = true;
+
+            tabTempsArretVertical.push((endTime - startTime) / 1000);
+            startTime = new Date();
             setTimeout(function(){
                 bRougeVertical = false;
                 bVertVertical = true;
@@ -339,6 +362,9 @@ window.addEventListener("load", function(event) {
             bRougeVertical = true;
             bVertVertical = false;
             alternanceFeu = true;
+
+            tabTempsArretHorizontal.push((endTime - startTime) / 1000);
+            startTime = new Date();
             setTimeout(function(){
                 bRougeHorizontal = false;
                 bVertHorizontal = true;

@@ -13,10 +13,10 @@ const HOST = '0.0.0.0';
 const PORT = 3000;
 
 webSocketServer.on('connection', (ws) => {
-    console.log("New client connected !");
+    console.log("Client has connected !");
 
     ws.onmessage = (event) => {
-        var msg = JSON.parse(event.data);
+        let msg = JSON.parse(event.data);
         //console.log(msg)
         //console.log("Alternance Feu ?"+ msg.alternanceFeu);
         //console.log("Feu Horizontal ? " + msg.feuVertHorizontal);
@@ -24,11 +24,15 @@ webSocketServer.on('connection', (ws) => {
         //console.log("nb feux : " + msg.nbFeux);
         //console.log("nb voitHoriz ? " + msg.nbVoituresHorizontales);
         //console.log("nb voitVert ? " + msg.nbVoituresVerticales);
+        //console.log("temps arret H " + msg.tempsArretHorizontal);
+        //console.log("temps arret V " + msg.tempsArretVertical);
 
         let circulation = new Circulation({
-            nbFeux : msg.nbFeux,
-            nbVoituresHorizontales : msg.nbVoituresHorizontales,
-            nbVoituresVerticales : msg.nbVoituresVerticales
+            nbFeux: msg.nbFeux,
+            nbVoituresHorizontales: msg.nbVoituresHorizontales,
+            nbVoituresVerticales: msg.nbVoituresVerticales,
+            tempsArretHorizontal: msg.tempsArretHorizontal,
+            tempsArretVertical: msg.tempsArretVertical
         });
         
         circulation.save(function (err) {

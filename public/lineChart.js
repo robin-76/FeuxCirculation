@@ -1,16 +1,17 @@
 let ctx;
-let myChart;
+let chart;
 let tabAlternanceFeu = [];
 let tabHorizontal = [];
 let tabVertical = [];
 let tabSeconde = [];
 let i = 0;
 const ws = new WebSocket("ws://localhost:3000");
+
 ws.addEventListener("open", () => {
     console.log("We are connected2!");
 
     ws.onmessage = (event) => {
-        var msg = JSON.parse(event.data);
+        let msg = JSON.parse(event.data);
         
         if(msg.alternanceFeu)
             tabAlternanceFeu.push(i);
@@ -55,14 +56,16 @@ ws.addEventListener("open", () => {
                     backgroundColor: 'blue',
                     borderColor: 'blue',
                     fill: false,
-                    tension: 0.1
+                    tension: 0.1,
+                    pointRadius: 0
                 }, { 
                     data: tabVertical,
                     label: "Voitures verticales",
                     backgroundColor: 'green',
                     borderColor: "green",
                     fill: false,
-                    tension: 0.1
+                    tension: 0.1,
+                    pointRadius: 0
                 }, {
                     label: "Alternance des feux",
                     backgroundColor: 'red',
@@ -83,6 +86,10 @@ ws.addEventListener("open", () => {
                         }
                     },
                     y: {
+                        ticks: {
+                            beginAtZero: true,
+                            callback: function(value) {if (value % 1 === 0) {return value;}}
+                        },
                         title: {
                             display: true,
                             text: 'Nombre de voitures',
