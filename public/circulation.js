@@ -1,7 +1,12 @@
 window.addEventListener("load", function(event) {
     const ws = new WebSocket("ws://localhost:3000");
+    ws.addEventListener("open", () => {
+        console.log("We are connected!");
+    });
+
     let i;
     let msg;
+    let alternanceFeu = false;
     let nbFeux = 0;
     let nbVoituresHorizontales = 0;
     let nbVoituresVerticales = 0;
@@ -65,6 +70,7 @@ window.addEventListener("load", function(event) {
     }
 
     interval = setInterval(deplacementVoitures, 6);
+    setInterval(sendWebSocket, 1000);
 
     function deplacementVoitures() {
         let i;
@@ -209,6 +215,20 @@ window.addEventListener("load", function(event) {
         }
     }
 
+    function sendWebSocket() {
+        msg = {
+            alternanceFeu: alternanceFeu,
+            feuVertHorizontal: bVertHorizontal,
+            feuVertVertical: bVertVertical,
+            nbFeux: nbFeux,
+            nbVoituresHorizontales: nbVoituresHorizontales,
+            nbVoituresVerticales: nbVoituresVerticales,
+        };
+                
+        ws.send(JSON.stringify(msg));
+        alternanceFeu = false;
+    }
+
     function vertHorizontal() {
         ctx.beginPath();
         ctx.fillStyle="#000000"
@@ -307,35 +327,21 @@ window.addEventListener("load", function(event) {
             orangeFiniHorizontal = false;
             bVertHorizontal = false;
             bRougeHorizontal = true;
+            alternanceFeu = true;
             setTimeout(function(){
                 bRougeVertical = false;
                 bVertVertical = true;
-                msg = {
-                    feuVertHorizontal: bVertHorizontal,
-                    feuVertVertical: bVertVertical,
-                    nbFeux: nbFeux,
-                    nbVoituresHorizontales: nbVoituresHorizontales,
-                    nbVoituresVerticales: nbVoituresVerticales,
-                };
-                ws.send(JSON.stringify(msg));
             }, 1000);
         }
 
-        else if(bRougeHorizontal) {
+        else if(bVertVertical) {
             orangeFiniVertical = false;
             bRougeVertical = true;
             bVertVertical = false;
+            alternanceFeu = true;
             setTimeout(function(){
                 bRougeHorizontal = false;
                 bVertHorizontal = true;
-                msg = {
-                    feuVertHorizontal: bVertHorizontal,
-                    feuVertVertical: bVertVertical,
-                    nbFeux: nbFeux,
-                    nbVoituresHorizontales: nbVoituresHorizontales,
-                    nbVoituresVerticales: nbVoituresVerticales,
-                };
-                ws.send(JSON.stringify(msg));
             }, 1000);
         }
 
@@ -346,17 +352,4 @@ window.addEventListener("load", function(event) {
         }, 1000);
     }
     document.getElementById('boutonAlterner').onclick = function() { boutonAlterner(); }
-
-        ws.addEventListener("open", () => {
-            console.log("We are connected!");
-            msg = {
-                feuVertHorizontal: bVertHorizontal,
-                feuVertVertical: bVertVertical,
-                nbFeux: nbFeux,
-                nbVoituresHorizontales: nbVoituresHorizontales,
-                nbVoituresVerticales: nbVoituresVerticales,
-            };
-                
-            ws.send(JSON.stringify(msg));
-        });
 });

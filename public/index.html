@@ -5,12 +5,16 @@
     <title>Feux de circulation</title>
     <h1>Feux de circulation</h1>
     <link href="index.css" type="text/css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="circulation.js"></script>
 </head>
 
 <body>
-<canvas id="canvas" width="800" height="800"></canvas>
-<button class="bouton" id="boutonAlterner" type="button">Alterner</button>
+    <div class ="lineChart"><canvas id="lineChart" width="600" height="350"></canvas></div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="lineChart.js"></script>
+    <canvas class ="circulation" id="canvas" width="800" height="800"></canvas>
+    <button class="bouton" id="boutonAlterner" type="button">Alterner</button>
 </body>
 <footer>
     <p>© Robin Guyomar & Maxence Bourgeaux</p>

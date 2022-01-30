@@ -1,8 +1,6 @@
 const express = require('express');
 const db = require('./database/db');
-const Feu = require('./database/models/Feu');
 const Circulation = require('./database/models/Circulation');
-Circulation.collection.drop();
 const arduino = require('./arduino');
 const app = express();
 app.use(express.static(__dirname + "/public"));
@@ -19,23 +17,16 @@ webSocketServer.on('connection', (ws) => {
 
     ws.onmessage = (event) => {
         var msg = JSON.parse(event.data);
-        console.log("nb feux : " + msg.nbFeux);
-        console.log("Feu Horizontal ? " + msg.feuVertHorizontal);
-        console.log("Feu Vertical ? " + msg.feuVertVertical);
-
-        Feu.collection.drop();
-        let feu = new Feu({
-            feuVertHorizontal : msg.feuVertHorizontal,
-            feuVertVertical : msg.feuVertVertical,
-            nbFeux : msg.nbFeux
-        });
-        
-        feu.save(function (err) {
-            if (err)
-                console.error(err);
-        });
+        //console.log(msg)
+        //console.log("Alternance Feu ?"+ msg.alternanceFeu);
+        //console.log("Feu Horizontal ? " + msg.feuVertHorizontal);
+        //console.log("Feu Vertical ? " + msg.feuVertVertical);
+        //console.log("nb feux : " + msg.nbFeux);
+        //console.log("nb voitHoriz ? " + msg.nbVoituresHorizontales);
+        //console.log("nb voitVert ? " + msg.nbVoituresVerticales);
 
         let circulation = new Circulation({
+            nbFeux : msg.nbFeux,
             nbVoituresHorizontales : msg.nbVoituresHorizontales,
             nbVoituresVerticales : msg.nbVoituresVerticales
         });
@@ -43,7 +34,12 @@ webSocketServer.on('connection', (ws) => {
         circulation.save(function (err) {
             if (err)
                 console.error(err);
-        });
+            });
+
+        webSocketServer.clients.forEach(function each(client) {
+            if (client !== ws && client.readyState === WebSocket.OPEN)
+                client.send(event.data);
+        });    
     }
 
     ws.on("close", () =>  {

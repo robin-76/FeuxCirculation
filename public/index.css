@@ -7,16 +7,22 @@ h1{
     font-family: Arial, serif;
 }
 
-canvas {
+.circulation {
     background-image: url('img/feux.png');
     background-repeat: no-repeat;
     margin-left: 5%;
     display: block;
 }
 
+.lineChart {
+    position: absolute;
+    left: 1100px;
+    bottom: 55%;
+}
+
 .bouton {
     position: fixed;
-    left: 600px;
+    left: 650px;
     bottom: 18%;
     height: 40px;
     border: 0;
