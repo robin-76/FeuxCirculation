@@ -19,8 +19,8 @@ webSocketServer.on('connection', (ws) => {
         let msg = JSON.parse(event.data);
         //console.log(msg)
         //console.log("Alternance Feu ?"+ msg.alternanceFeu);
-        //console.log("Feu Horizontal ? " + msg.feuVertHorizontal);
-        //console.log("Feu Vertical ? " + msg.feuVertVertical);
+        console.log("Feu Horizontal ? " + msg.feuVertHorizontal);
+        console.log("Feu Vertical ? " + msg.feuVertVertical);
         //console.log("nb feux : " + msg.nbFeux);
         //console.log("nb voitHoriz ? " + msg.nbVoituresHorizontales);
         //console.log("nb voitVert ? " + msg.nbVoituresVerticales);

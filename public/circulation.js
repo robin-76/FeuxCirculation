@@ -17,7 +17,7 @@ window.addEventListener("load", function(event) {
 
     const nbVoitures = 6;
     let interval;
-    let orangeFiniHorizontal = false, orangeFiniVertical = false;
+    let orangeFiniHorizontal = false, orangeFiniVertical = true;
     let bVertHorizontal = true, bRougeHorizontal = false;
     let bVertVertical = false, bRougeVertical = true;
     const distanceArret = 120, distanceMin = 125, distanceMax = 500;
@@ -130,7 +130,7 @@ window.addEventListener("load", function(event) {
 
             if(!orangeFiniHorizontal) {
                 orangeHorizontal();
-                setTimeout(rougeHorizontal, 600);
+                setTimeout(rougeHorizontal, 2000);
             }
             else
                 rougeHorizontal();
@@ -170,7 +170,7 @@ window.addEventListener("load", function(event) {
 
             if(!orangeFiniVertical) {
                 orangeVertical();
-                setTimeout(rougeVertical, 600);
+                setTimeout(rougeVertical, 2000);
             }
             else
                 rougeVertical();
@@ -354,7 +354,7 @@ window.addEventListener("load", function(event) {
             setTimeout(function(){
                 bRougeVertical = false;
                 bVertVertical = true;
-            }, 1000);
+            }, 2500);
         }
 
         else if(bVertVertical) {
@@ -368,7 +368,7 @@ window.addEventListener("load", function(event) {
             setTimeout(function(){
                 bRougeHorizontal = false;
                 bVertHorizontal = true;
-            }, 1000);
+            }, 2500);
         }
 
         document.getElementById("boutonAlterner").disabled = true;
