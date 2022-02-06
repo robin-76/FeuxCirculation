@@ -20,10 +20,6 @@ ws.addEventListener("open", () => {
         tabHorizontal.push(msg.nbVoituresHorizontales);
         tabVertical.push(msg.nbVoituresVerticales);
 
-        //console.log("Alternance Feu ?"+ msg.alternanceFeu);
-        //console.log("nb voitHoriz ? " + msg.nbVoituresHorizontales);
-        //console.log("nb voitVert ? " + msg.nbVoituresVerticales);
-
         if(ctx)
             chart.destroy();
 
@@ -31,7 +27,7 @@ ws.addEventListener("open", () => {
 
         const arbitraryLine = {
             id: 'arbitraryLine',
-            beforeDraw(chart){
+            beforeDraw(chart) {
             const { ctx, chartArea: { top, height}, scales:
                 {x} } = chart;
 
@@ -109,5 +105,8 @@ ws.addEventListener("open", () => {
             },
             plugins: [arbitraryLine]
         });
+    }
+    this.close = function () {
+        ws.close();
     }
 });

@@ -63,4 +63,8 @@ ws2.addEventListener("open", () => {
             }
         });        
     }
+
+    this.close = function () {
+        ws2.close();
+    }
 });

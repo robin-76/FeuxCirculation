@@ -375,7 +375,11 @@ window.addEventListener("load", function(event) {
 
         setTimeout(function(){
             document.getElementById("boutonAlterner").disabled = false;
-        }, 1000);
+        }, 2500);
     }
-    document.getElementById('boutonAlterner').onclick = function() { boutonAlterner(); }
+    document.getElementById('boutonAlterner').onclick = function() { boutonAlterner();}
+
+    this.close = function () {
+        ws.close();
+    }
 });
