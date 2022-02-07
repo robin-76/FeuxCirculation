@@ -5,13 +5,13 @@ const app = express();
 app.use(express.static(__dirname + "/public"));
 
 const WebSocket = require('ws');
-//const five = require("johnny-five");
+const five = require("johnny-five");
 const http = require('http').Server(app);
 const webSocketServer = new WebSocket.Server({ server: http });
 
 const HOST = '0.0.0.0';
 const PORT = 3000;
-/*
+
 const board = new five.Board();
 let status = false;
 
@@ -145,7 +145,7 @@ board.on('ready', function() {
             }, 8000);
         }
     }
-});*/
+});
 
 webSocketServer.on('connection', (ws) => {
     console.log("Client has connected !");
