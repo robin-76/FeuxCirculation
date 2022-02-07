@@ -23,6 +23,10 @@ On commence par installer les dépendances :
 
     npm i
 
+On démarre MongoDB si ce n'est pas déjà fait : 
+
+    sudo systemctl start mongod
+
 Puis on lance le projet :
 
     npm start

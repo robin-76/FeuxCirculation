@@ -1,4 +1,4 @@
-window.addEventListener("load", function(event) {
+window.addEventListener("load", function() {
     const ws = new WebSocket("ws://localhost:3000");
     ws.addEventListener("open", () => {
         console.log("We are connected!");
@@ -150,7 +150,7 @@ window.addEventListener("load", function(event) {
                     nbVoituresVerticales++;
 
                 if((parseInt(tabYHaut[i])===feuHaut))
-                    nbVoituresVerticales++;      
+                    nbVoituresVerticales++;
             }
         }
 
@@ -165,7 +165,7 @@ window.addEventListener("load", function(event) {
                     tabYBas[i] -= Math.random() * (vitesseMax - vitesseMin) + vitesseMin;
 
                 if((parseInt(tabYHaut[i])!==feuHaut && parseInt(tabYHaut[i])!==feuHaut-1 && parseInt(tabYHaut[i])!==feuHaut+1) && !tabVoitureStopHaut[i])
-                    tabYHaut[i] += Math.random() * (vitesseMax - vitesseMin) + vitesseMin;  
+                    tabYHaut[i] += Math.random() * (vitesseMax - vitesseMin) + vitesseMin;
             }
 
             if(!orangeFiniVertical) {
@@ -229,7 +229,7 @@ window.addEventListener("load", function(event) {
             tempsArretHorizontal: moyenne(tabTempsArretHorizontal),
             tempsArretVertical: moyenne(tabTempsArretVertical)
         };
-                
+
         ws.send(JSON.stringify(msg));
         alternanceFeu = false;
     }
@@ -325,13 +325,13 @@ window.addEventListener("load", function(event) {
     function moyenne(tab) {
         if(!tab.length)
             return 0;
-        
+
         let sum = 0;
-     
+
         tab.forEach(item => {
           sum += item;
         });
-     
+
         return Math.round(sum / tab.length);
     }
 
@@ -377,7 +377,10 @@ window.addEventListener("load", function(event) {
             document.getElementById("boutonAlterner").disabled = false;
         }, 2500);
     }
-    document.getElementById('boutonAlterner').onclick = function() { boutonAlterner();}
+    document.getElementById('boutonAlterner').onclick = function() {
+        boutonAlterner();
+        fetch('/', {method: 'POST'}).then(r => console.log(r));
+    }
 
     this.close = function () {
         ws.close();

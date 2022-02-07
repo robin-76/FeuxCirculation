@@ -16,6 +16,10 @@ const board = new five.Board();
 let status = false;
 
 board.on('ready', function() {
+    app.post('/', () => {
+        toggle();
+    })
+
     // Représente un feu horizontal
     const ledVerteH = new five.Led(13);
     const ledOrangeH = new five.Led(12);
@@ -79,29 +83,38 @@ board.on('ready', function() {
             ledVerteV.off();
 
             setTimeout(() => {
+                ledOrangeV.on();
+            }, 1000);
+
+            setTimeout(() => {
+                ledOrangeV.off();
+            }, 3500);
+
+            setTimeout(() => {
                 ledRougeV.on();
-            }, 2000);
+            }, 4500);
 
             setTimeout(() => {
                 ledRougeH.stop();
                 ledRougeH.off();
-            }, 3000);
+            }, 5500);
 
             setTimeout(() => {
                 ledVerteH.on();
-            }, 4000);
+            }, 6500);
 
             setTimeout(() => {
                 buzzer.frequency(999, 500);
-            }, 5000);
+            }, 7500);
 
             setTimeout(() => {
                 buzzer.off();
-            }, 5500);
+            }, 8000);
         } else {
             status = false;
             ledVerteH.stop();
             ledVerteH.off();
+
             setTimeout(() => {
                 ledOrangeH.on();
             }, 1000);
@@ -168,3 +181,5 @@ webSocketServer.on('connection', (ws) => {
 http.listen(PORT, HOST, () => {
     console.log(`Server launched on http://${HOST}:${PORT}`);
 });
+
+module.exports = app;
