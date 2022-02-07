@@ -1,4 +1,4 @@
-window.addEventListener("load", function() {
+window.addEventListener("load", function(event) {
     const ws = new WebSocket("ws://localhost:3000");
     ws.addEventListener("open", () => {
         console.log("We are connected!");
@@ -150,7 +150,7 @@ window.addEventListener("load", function() {
                     nbVoituresVerticales++;
 
                 if((parseInt(tabYHaut[i])===feuHaut))
-                    nbVoituresVerticales++;
+                    nbVoituresVerticales++;      
             }
         }
 
@@ -165,7 +165,7 @@ window.addEventListener("load", function() {
                     tabYBas[i] -= Math.random() * (vitesseMax - vitesseMin) + vitesseMin;
 
                 if((parseInt(tabYHaut[i])!==feuHaut && parseInt(tabYHaut[i])!==feuHaut-1 && parseInt(tabYHaut[i])!==feuHaut+1) && !tabVoitureStopHaut[i])
-                    tabYHaut[i] += Math.random() * (vitesseMax - vitesseMin) + vitesseMin;
+                    tabYHaut[i] += Math.random() * (vitesseMax - vitesseMin) + vitesseMin;  
             }
 
             if(!orangeFiniVertical) {
@@ -229,7 +229,7 @@ window.addEventListener("load", function() {
             tempsArretHorizontal: moyenne(tabTempsArretHorizontal),
             tempsArretVertical: moyenne(tabTempsArretVertical)
         };
-
+                
         ws.send(JSON.stringify(msg));
         alternanceFeu = false;
     }
@@ -325,13 +325,13 @@ window.addEventListener("load", function() {
     function moyenne(tab) {
         if(!tab.length)
             return 0;
-
+        
         let sum = 0;
-
+     
         tab.forEach(item => {
           sum += item;
         });
-
+     
         return Math.round(sum / tab.length);
     }
 
@@ -354,7 +354,7 @@ window.addEventListener("load", function() {
             setTimeout(function(){
                 bRougeVertical = false;
                 bVertVertical = true;
-            }, 2500);
+            }, 3500);
         }
 
         else if(bVertVertical) {
@@ -368,7 +368,7 @@ window.addEventListener("load", function() {
             setTimeout(function(){
                 bRougeHorizontal = false;
                 bVertHorizontal = true;
-            }, 2500);
+            }, 3500);
         }
 
         document.getElementById("boutonAlterner").disabled = true;
@@ -377,10 +377,7 @@ window.addEventListener("load", function() {
             document.getElementById("boutonAlterner").disabled = false;
         }, 2500);
     }
-    document.getElementById('boutonAlterner').onclick = function() {
-        boutonAlterner();
-        fetch('/', {method: 'POST'}).then(r => console.log(r));
-    }
+    document.getElementById('boutonAlterner').onclick = function() { boutonAlterner();}
 
     this.close = function () {
         ws.close();
