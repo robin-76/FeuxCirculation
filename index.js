@@ -13,7 +13,8 @@ const HOST = '0.0.0.0';
 const PORT = 3000;
 
 const board = new five.Board();
-let status = false;
+let feuVertHorizontal = true;
+let alternanceFeu = false;
 
 board.on('ready', function() {
     app.post('/', () => {
@@ -21,14 +22,14 @@ board.on('ready', function() {
     })
 
     // Représente un feu horizontal
-    const ledVerteH = new five.Led(13);
-    const ledOrangeH = new five.Led(12);
-    const ledRougeH = new five.Led(11);
+    const ledVerteH = new five.Led(8);
+    const ledOrangeH = new five.Led(9);
+    const ledRougeH = new five.Led(10);
 
     // Représente un feu vertical
-    const ledRougeV = new five.Led(10);
-    const ledOrangeV = new five.Led(9);
-    const ledVerteV = new five.Led(8);
+    const ledRougeV = new five.Led(11);
+    const ledOrangeV = new five.Led(12);
+    const ledVerteV = new five.Led(13);
 
     // Composant émettant un bruit sonore
     const buzzer = new five.Piezo(2);
@@ -52,6 +53,7 @@ board.on('ready', function() {
 
     // Quand on appuie sur le bouton
     button.on("up", function() {
+        alternanceFeu = true;
         toggle();
     });
 
@@ -77,8 +79,8 @@ board.on('ready', function() {
     });
 
     function toggle() {
-        if (status === false) {
-            status = true;
+        if (feuVertHorizontal === false) {
+            feuVertHorizontal = true;
             ledVerteV.stop();
             ledVerteV.off();
 
@@ -103,7 +105,7 @@ board.on('ready', function() {
                 buzzer.off();
             }, 5000);
         } else {
-            status = false;
+            feuVertHorizontal = false;
             ledVerteH.stop();
             ledVerteH.off();
 
@@ -137,6 +139,14 @@ webSocketServer.on('connection', (ws) => {
     ws.onmessage = (event) => {
         let msg = JSON.parse(event.data);
 
+        if(alternanceFeu) {
+            msg.alternanceFeu = alternanceFeu;
+            alternanceFeu = false;
+        }
+            
+        msg.feuVertHorizontal = feuVertHorizontal;
+        msg.feuVertVertical = !feuVertHorizontal;
+
         let circulation = new Circulation({
             nbFeux: msg.nbFeux,
             nbVoituresHorizontales: msg.nbVoituresHorizontales,
@@ -152,7 +162,7 @@ webSocketServer.on('connection', (ws) => {
 
         webSocketServer.clients.forEach(function each(client) {
             if (client !== ws && client.readyState === WebSocket.OPEN)
-                client.send(event.data);
+                client.send(JSON.stringify(msg));
         });
     }
 

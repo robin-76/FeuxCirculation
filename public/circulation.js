@@ -1,14 +1,20 @@
-window.addEventListener("load", function(event) {
-    const ws = new WebSocket("ws://localhost:3000");
-    ws.addEventListener("open", () => {
+let alternanceFeu = false;
+const wss = new WebSocket("ws://localhost:3000");
+    wss.addEventListener("open", () => {
         console.log("We are connected!");
     });
 
+    wss.onmessage = (event) => {
+        let msg = JSON.parse(event.data);
+        if(msg.alternanceFeu)
+            alternanceFeu = true;
+    }
+
+window.addEventListener("load", function(event) {
     let i;
     let msg;
     let startTime, endTime;
     let tabTempsArretHorizontal = [], tabTempsArretVertical = [];
-    let alternanceFeu = false;
     let nbFeux = 0;
     let nbVoituresHorizontales = 0;
     let nbVoituresVerticales = 0;
@@ -73,9 +79,14 @@ window.addEventListener("load", function(event) {
 
     interval = setInterval(deplacementVoitures, 6);
     startTime = new Date();
-    setInterval(sendWebSocket, 1000);
+    setInterval(sendWebSocket, 250);
 
     function deplacementVoitures() {
+        if(alternanceFeu) {
+            boutonAlterner();
+            alternanceFeu = false;
+        }
+            
         let i;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -230,7 +241,7 @@ window.addEventListener("load", function(event) {
             tempsArretVertical: moyenne(tabTempsArretVertical)
         };
                 
-        ws.send(JSON.stringify(msg));
+        wss.send(JSON.stringify(msg));
         alternanceFeu = false;
     }
 
@@ -375,7 +386,7 @@ window.addEventListener("load", function(event) {
 
         setTimeout(function(){
             document.getElementById("boutonAlterner").disabled = false;
-        }, 2500);
+        }, 3500);
     }
 
     document.getElementById('boutonAlterner').onclick = function() {
