@@ -351,7 +351,7 @@ window.addEventListener("load", function(event) {
 
             tabTempsArretVertical.push((endTime - startTime) / 1000);
             startTime = new Date();
-            setTimeout(function(){
+            setTimeout(function() {
                 bRougeVertical = false;
                 bVertVertical = true;
             }, 3500);
@@ -365,7 +365,7 @@ window.addEventListener("load", function(event) {
 
             tabTempsArretHorizontal.push((endTime - startTime) / 1000);
             startTime = new Date();
-            setTimeout(function(){
+            setTimeout(function() {
                 bRougeHorizontal = false;
                 bVertHorizontal = true;
             }, 3500);
@@ -377,7 +377,11 @@ window.addEventListener("load", function(event) {
             document.getElementById("boutonAlterner").disabled = false;
         }, 2500);
     }
-    document.getElementById('boutonAlterner').onclick = function() { boutonAlterner();}
+
+    document.getElementById('boutonAlterner').onclick = function() {
+        boutonAlterner();
+        fetch('/', {method: 'POST'}).then(r => console.log(r));
+    }
 
     this.close = function () {
         ws.close();

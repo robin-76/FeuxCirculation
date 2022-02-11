@@ -82,67 +82,51 @@ board.on('ready', function() {
             ledVerteV.stop();
             ledVerteV.off();
 
-            setTimeout(() => {
-                ledOrangeV.on();
-            }, 1000);
+            ledOrangeV.on();
 
             setTimeout(() => {
                 ledOrangeV.off();
-            }, 3500);
-
-            setTimeout(() => {
                 ledRougeV.on();
-            }, 4500);
+            }, 2000);
 
             setTimeout(() => {
                 ledRougeH.stop();
                 ledRougeH.off();
-            }, 5500);
-
-            setTimeout(() => {
                 ledVerteH.on();
-            }, 6500);
+            }, 3500);
 
             setTimeout(() => {
                 buzzer.frequency(999, 500);
-            }, 7500);
+            }, 4500);
 
             setTimeout(() => {
                 buzzer.off();
-            }, 8000);
+            }, 5000);
         } else {
             status = false;
             ledVerteH.stop();
             ledVerteH.off();
 
-            setTimeout(() => {
-                ledOrangeH.on();
-            }, 1000);
+            ledOrangeH.on();
 
             setTimeout(() => {
                 ledOrangeH.off();
-            }, 3500);
-
-            setTimeout(() => {
                 ledRougeH.on();
-            }, 4500);
+            }, 2000);
 
             setTimeout(() => {
                 ledRougeV.stop();
                 ledRougeV.off();
-            }, 5500);
-
-            setTimeout(() => {
                 ledVerteV.on();
-            }, 6500);
+            }, 3500);
 
             setTimeout(() => {
                 buzzer.frequency(999, 500);
-            }, 7500);
+            }, 4500);
 
             setTimeout(() => {
                 buzzer.off();
-            }, 8000);
+            }, 5000);
         }
     }
 });
