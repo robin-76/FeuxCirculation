@@ -82,10 +82,8 @@ window.addEventListener("load", function(event) {
     setInterval(sendWebSocket, 1000);
 
     function deplacementVoitures() {
-        if(alternanceFeu) {
+        if(alternanceFeu)
             boutonAlterner();
-            alternanceFeu = false;
-        }
             
         let i;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
