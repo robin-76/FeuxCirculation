@@ -79,7 +79,7 @@ window.addEventListener("load", function(event) {
 
     interval = setInterval(deplacementVoitures, 6);
     startTime = new Date();
-    setInterval(sendWebSocket, 250);
+    setInterval(sendWebSocket, 1000);
 
     function deplacementVoitures() {
         if(alternanceFeu) {
