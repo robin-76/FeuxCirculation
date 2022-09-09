@@ -57,3 +57,7 @@ Voici la liste des composants utilisés pour réaliser ce projet :
 Ce schéma a été réalisé via le logiciel Fritzing.
 
 ![Schema](public/img/Arduino.png)
+
+## Démonstration
+
+![demo](public/img/FeuxDeCirculation.gif)
